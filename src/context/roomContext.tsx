@@ -6,10 +6,7 @@ import {
   useEffect,
 } from "react";
 import { roomData } from "../data/data";
-import {
-  Room,
-  RoomContextType,
-} from "../../../../personal/hotel-website/src/types/roomTypes";
+import { Room, RoomContextType } from "../type/roomTypes";
 // eslint-disable-next-line react-refresh/only-export-components
 export const RoomContext = createContext<RoomContextType | null>(null);
 
