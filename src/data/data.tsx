@@ -1,4 +1,4 @@
-import { Room } from "../../../../personal/hotel-website/src/types/roomTypes";
+import { Room } from "../type/roomTypes";
 
 import Room1Img from "../images/rooms/1.png";
 import Room1ImgLg from "../images/rooms/1-lg.png";
