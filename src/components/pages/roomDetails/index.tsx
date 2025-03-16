@@ -7,15 +7,24 @@ import ReservationForm from "../roomDetails/reservationForm/index";
 
 const RoomDetailsScreen = () => {
   const { id } = useParams();
-  console.log(id);
   const { rooms } = useRoomContext();
 
-  const room = rooms.find((room) => {
-    return room.id === Number(id);
-  });
-  console.log(room);
+  // Ensure room is correctly typed
+  const room: Room | undefined = rooms.find(
+    (room: Room) => room.id === Number(id)
+  );
 
-  const { name, description, facilities, imageLg, price } = room as Room;
+  // Prevent error if room is not found
+  if (!room) {
+    return (
+      <p className="text-center text-red-500 text-lg font-semibold">
+        Room not found
+      </p>
+    );
+  }
+
+  // Destructure after confirming room exists
+  const { name, description, facilities, imageLg, price } = room;
 
   return (
     <section className="">
@@ -27,20 +36,17 @@ const RoomDetailsScreen = () => {
       </div>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+          {/* Left Section - Room Info */}
           <div className="space-y-6 h-full flex flex-col">
             <h2 className="text-4xl font-bold">{name}</h2>
             <p className="text-gray-600">{description}</p>
             <img
               className="w-full rounded-lg flex-grow"
               src={imageLg}
-              alt="Room"
+              alt={name}
             />
             <div>
-              <h3 className="text-2xl font-semibold mb-3">Rooms Facilities</h3>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum
-                quibusdam illo fugiat mollitia...
-              </p>
+              <h3 className="text-2xl font-semibold mb-3">Room Facilities</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
                 {facilities.map((item, index) => (
                   <div className="flex items-center gap-x-3" key={index}>
@@ -51,6 +57,8 @@ const RoomDetailsScreen = () => {
               </div>
             </div>
           </div>
+
+          {/* Right Section - Reservation Form */}
           <div className="p-6 h-full flex flex-col">
             <div className="flex-grow">
               <ReservationForm price={price} />
